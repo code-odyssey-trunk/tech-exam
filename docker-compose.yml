@@ -10,9 +10,9 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - test_container-db:/var/lib/postgresql/data
+      - user_book5-db:/var/lib/postgresql/data
 
-  test_container:
+  user_book5:
     build:
       context: .
     environment:
@@ -26,4 +26,4 @@ services:
       - "3000:3000"
 
 volumes:
-  test_container-db:
+  user_book5-db:
