@@ -6,6 +6,7 @@ router.get("/all", function (req, res) {
   db.Person.findAll()
     .then((persons) => {
       res.status(200).send(JSON.stringify(persons));
+      // res.status(200).send("TEST OK 1");
     })
     .catch((err) => {
       res.status(500).send(JSON.stringify(err));
@@ -22,18 +23,42 @@ router.get("/:id", function (req, res) {
     });
 });
 
+router.post("/", function async(req, res) {
+  const { userName, password } = req.body;
+  db.Person.findOne({ where: { userName, password } })
+    .then((person) => {
+      res.status(200).send(JSON.stringify(person));
+    })
+    .catch((err) => {
+      res.status(500).send(JSON.stringify(err));
+    });
+});
+
 router.put("/", function (req, res) {
+  const { name, userName, password, id } = req.body;
+
   db.Person.create({
-    name: req.body.name,
-    userName: req.body.userName,
-    password: req.body.password,
-    id: req.body.id,
+    name,
+    userName,
+    password,
+    id,
   })
     .then((person) => {
       res.status(200).send(JSON.stringify(person));
     })
     .catch((err) => {
       res.status(500).send(JSON.stringify(err));
+    });
+});
+
+router.put("/update", function (req, res) {
+  console.log("req==>", req);
+  db.Person.update({ name: req.body.name }, { where: { id: req.body.id } })
+    .then(function (rowsUpdated) {
+      res.json(rowsUpdated);
+    })
+    .catch((err) => {
+      res.status(500).send(JSON.stringify(req.body));
     });
 });
 

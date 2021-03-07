@@ -10,9 +10,9 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - user_book5-db:/var/lib/postgresql/data
+      - user_book6-db:/var/lib/postgresql/data
 
-  user_book5:
+  user_book6:
     build:
       context: .
     environment:
@@ -26,4 +26,4 @@ services:
       - "3000:3000"
 
 volumes:
-  user_book5-db:
+  user_book6-db:

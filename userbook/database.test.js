@@ -9,8 +9,8 @@ test("create person", async () => {
   const person = await db.Person.create({
     id: 1,
     name: "Bobbie",
-    userName: "bob2020",
-    password: "abc123",
+    userName: "bobman",
+    password: "bobbie",
   });
   expect(person.id).toEqual(1);
 });
@@ -18,8 +18,8 @@ test("create person", async () => {
 test("get person", async () => {
   expect.assertions(2);
   const person = await db.Person.findByPk(1);
-  expect(person.userName).toEqual("bob2020");
-  expect(person.password).toEqual("abc123");
+  expect(person.userName).toEqual("bobman");
+  expect(person.password).toEqual("bobbie");
 });
 
 test("delete person", async () => {
