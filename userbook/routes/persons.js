@@ -2,17 +2,18 @@ var express = require("express");
 var router = express.Router();
 var db = require("../database");
 
+//Get all users
 router.get("/all", function (req, res) {
   db.Person.findAll()
     .then((persons) => {
       res.status(200).send(JSON.stringify(persons));
-      // res.status(200).send("TEST OK 1");
     })
     .catch((err) => {
       res.status(500).send(JSON.stringify(err));
     });
 });
 
+//Get a user by id
 router.get("/:id", function (req, res) {
   db.Person.findByPk(req.params.id)
     .then((person) => {
@@ -23,6 +24,7 @@ router.get("/:id", function (req, res) {
     });
 });
 
+//Login using username and password
 router.post("/", function async(req, res) {
   const { userName, password } = req.body;
   db.Person.findOne({ where: { userName, password } })
@@ -34,9 +36,9 @@ router.post("/", function async(req, res) {
     });
 });
 
+//Create a user
 router.put("/", function (req, res) {
   const { name, userName, password, id } = req.body;
-
   db.Person.create({
     name,
     userName,
@@ -51,17 +53,18 @@ router.put("/", function (req, res) {
     });
 });
 
+//Update name of user using id
 router.put("/update", function (req, res) {
-  console.log("req==>", req);
   db.Person.update({ name: req.body.name }, { where: { id: req.body.id } })
     .then(function (rowsUpdated) {
       res.json(rowsUpdated);
     })
     .catch((err) => {
-      res.status(500).send(JSON.stringify(req.body));
+      res.status(500).send(JSON.stringify(err));
     });
 });
 
+//Delete a user using id
 router.delete("/:id", function (req, res) {
   db.Person.destroy({
     where: {

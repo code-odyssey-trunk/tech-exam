@@ -10,11 +10,11 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - user_book6-db:/var/lib/postgresql/data
+      - user_book7-db:/var/lib/postgresql/data
 
-  user_book6:
+  user_book7:
     build:
-      context: .
+      context: ./userbook
     environment:
       DB_SCHEMA: postgres
       DB_USER: postgres
@@ -23,7 +23,14 @@ services:
     depends_on:
       - postgres
     ports:
+      - "5000:5000"
+
+  ui:
+    build: ./ui
+    ports:
       - "3000:3000"
+    depends_on:
+      - user_book7
 
 volumes:
-  user_book6-db:
+  user_book7-db:
